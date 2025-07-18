@@ -11,32 +11,25 @@
       background-color: #f9f9f9;
     }
 
- <header class="banner-wrapper">
-  <img src="https://res.cloudinary.com/dh1qqui2h/image/upload/v1752830827/Logo_original_ij5vub.png" alt="Logo Escencia" class="banner-logo">
-</header>
-
-<style>
-  .banner-wrapper {
-    width: 100%;
-    padding: 30px 0;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .banner-logo {
-    max-width: 90%;
-    height: auto;
-    max-height: 200px;
-  }
-
-  @media (max-width: 600px) {
-    .banner-logo {
-      max-height: 140px;
+header {
+      padding: 0;
     }
-  }
-</style>
+
+    .banner-image {
+      width: 100%;
+      height: 40vh;
+      min-height: 200px;
+      background-image: url('https://res.cloudinary.com/dh1qqui2h/image/upload/v1752831494/Logo_original_m0nqzp.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    @media (max-width: 600px) {
+      .banner-image {
+        height: 30vh;
+      }
+    }
 
     .container {
       padding: 40px 20px;
