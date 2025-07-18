@@ -12,38 +12,22 @@
     }
 
     header {
-      padding: 0;
+      width: 100%;
+      overflow: hidden;
     }
 
-header {
-  background-image: url('https://res.cloudinary.com/dh1qqui2h/image/upload/v1752835605/ChatGPT_Image_18_jul_2025_07_45_52_dvy5zr.png'); /* o el link donde la subas */
-  background-size: cover;
-  background-position: center;
-  height: 300px;
-  width: 100%;
-}
-
-    }
-
-    @media (max-width: 768px) {
-      .banner-image {
-        height: 40vh; /* Ajusta la altura en dispositivos más pequeños */
-        min-height: 200px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .banner-image {
-        height: 30vh; /* Altura reducida para pantallas muy pequeñas */
-      }
+    header img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     .container {
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Hacer los productos responsivos */
-      gap: 20px; /* Espaciado entre los productos */
-      justify-items: center; /* Centra los productos */
+      padding: 40px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
     }
 
     .product {
@@ -51,9 +35,8 @@ header {
       border: 1px solid #ddd;
       border-radius: 8px;
       padding: 20px;
-      width: 100%; /* Ocupa todo el ancho disponible */
-      max-width: 250px; /* Limita el tamaño máximo */
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      width: 250px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       text-align: center;
     }
 
@@ -65,12 +48,10 @@ header {
 
     .product h3 {
       margin: 10px 0 5px;
-      font-size: 18px;
     }
 
     .product p {
       margin: 5px 0;
-      font-size: 16px;
     }
 
     .product button {
@@ -91,7 +72,7 @@ header {
       background-color: #2d3975;
       padding: 15px 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       display: flex;
       align-items: center;
       gap: 15px;
@@ -120,7 +101,7 @@ header {
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(0, 0, 0, 0.4);
+      background-color: rgba(0,0,0,0.4);
       display: none;
       justify-content: center;
       align-items: center;
@@ -135,7 +116,7 @@ header {
       max-width: 500px;
       max-height: 80vh;
       overflow-y: auto;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
     .cart-item {
@@ -186,7 +167,7 @@ header {
 <body>
 
   <header>
-    <div class="banner-image"></div>
+    <img src="https://cdn.openai.com/chat-assets/0162368f-42fc-45a6-8e35-03d4ceecb432/banner-escencia.jpg" alt="Escencia">
   </header>
 
   <main class="container" id="productList">
@@ -210,9 +191,9 @@ header {
 
   <script>
     const products = [
-      { id: 1, name: "Bolso Deportivo Escence", price: 50000, image:"https://media.istockphoto.com/id/1313476555/es/foto/bolsa-deportiva-aislada-sobre-el-fondo-blanco.jpg?s=1024x1024&w=is&k=20&c=pWuhRqZ7cuBKQNphz4ED29lCNnmMntrsZI6nyOTLckU=" },
-      { id: 2, name: "Mochila Escence", price: 35000, image: "https://media.istockphoto.com/id/1362790255/es/foto/mochila-azul-oscuro-para-hombre-fabricada-en-textil-un-fondo-blanco.jpg?s=1024x1024&w=is&k=20&c=PrHaJ8WBMnT_Bf49HmrKZsKyn2fFTg8ezMsfKPuhmLQ=" },
-      { id: 3, name: "Mochila Escence Pro", price: 65000, image: "https://media.istockphoto.com/id/167759603/es/foto/mochila.jpg?s=1024x1024&w=is&k=20&c=Tysx_WICFx43rT9zyIql5Jdmj7paYJC8YP1IyAho-SM=" }
+      { id: 1, name: "Bolso Deportivo Escence", price: 50000, image:"https://media.istockphoto.com/id/1313476555/es/foto/bolsa-deportiva-aislada-sobre-el-fondo-blanco.jpg" },
+      { id: 2, name: "Mochila Escence", price: 35000, image: "https://media.istockphoto.com/id/1362790255/es/foto/mochila-azul-oscuro-para-hombre-fabricada-en-textil-un-fondo-blanco.jpg" },
+      { id: 3, name: "Mochila Escence Pro", price: 65000, image: "https://media.istockphoto.com/id/167759603/es/foto/mochila.jpg" }
     ];
 
     const cart = [];
@@ -266,14 +247,13 @@ header {
     }
 
     function sendWhatsApp() {
-      if (cart.length === 0) return alert("El carrito está vacío.");
+      if (cart.length === 0) return alert("El carrito esta vacio.");
       let message = "Hola! Quiero confirmar el siguiente pedido:\n\n";
       cart.forEach(p => {
         message += `• ${p.name} - $${p.price}\n`;
       });
       const total = cart.reduce((sum, item) => sum + item.price, 0);
       message += `\nTotal: $${total}`;
-
       const phone = "5493541529201";
       const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
       window.open(url, '_blank');
