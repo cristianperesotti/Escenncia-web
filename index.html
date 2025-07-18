@@ -86,103 +86,153 @@
   font-size: 23px; /* Texto más grande */
 }
 
-    .cart-float {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #2d3975;
-      padding: 40px 60px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      z-index: 1000;
-      color: white;
-    }
+    /* Carrito flotante */
+.cart-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #2d3975;
+  padding: 60px 80px;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  z-index: 1000;
+  color: white;
+  font-size: 18px;
+}
 
-    .cart-float span {
-      font-weight: bold;
-      color: white;
-    }
+.cart-float span {
+  font-weight: bold;
+  color: white;
+  font-size: 20px;
+}
 
-    .cart-float button {
-      background-color: white;
-      color: #2d3975;
-      padding: 15px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+.cart-float button {
+  background-color: white;
+  color: #2d3975;
+  padding: 18px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+}
 
-    .cart-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0,0,0,0.4);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-    }
+/* Ventana modal */
+.cart-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
 
-    .cart-content {
-      background: white;
-      padding: 60px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 500px;
-      max-height: 80vh;
-      overflow-y: auto;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
+.cart-content {
+  background: white;
+  padding: 80px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-size: 18px;
+}
 
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 10px;
-    }
+/* Ítems dentro del carrito */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
 
-    .cart-item span {
-      font-weight: bold;
-    }
+.cart-item span {
+  font-weight: bold;
+  font-size: 18px;
+}
 
-    .cart-item button {
-      background-color: red;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+.cart-item button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    .close-cart {
-      background-color: transparent;
-      border: none;
-      font-size: 18px;
-      float: right;
-      cursor: pointer;
-      margin-bottom: 10px;
-    }
+/* Botón de cerrar */
+.close-cart {
+  background-color: transparent;
+  border: none;
+  font-size: 22px;
+  float: right;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
 
-    .whatsapp-button {
-      margin-top: 20px;
-      background-color: #25D366;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      width: 100%;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+/* Botón de WhatsApp */
+.whatsapp-button {
+  margin-top: 30px;
+  background-color: #25D366;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* RESPONSIVE para celulares y tablets */
+@media (max-width: 768px) {
+  .cart-float {
+    padding: 30px 40px;
+    font-size: 16px;
+    gap: 10px;
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .cart-float button {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+
+  .cart-content {
+    padding: 40px;
+    font-size: 16px;
+    max-width: 90%;
+  }
+
+  .cart-item span {
+    font-size: 16px;
+  }
+
+  .cart-item button {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+
+  .whatsapp-button {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .close-cart {
+    font-size: 20px;
+  }
   </style>
 </head>
 <body>
