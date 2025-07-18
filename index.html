@@ -460,13 +460,13 @@
         text-align: center;
         margin-bottom: 30px;
         display: flex;
-        flex-wrap: wrap; /* Para que los botones se envuelvan en pantallas pequeñas */
+        flex-wrap: wrap;
         justify-content: center;
-        gap: 15px; /* Espacio entre los botones */
+        gap: 15px;
     }
 
     .category-filters button {
-        background-color: #2d3975; /* Color principal de tu marca */
+        background-color: #2d3975;
         color: white;
         border: none;
         padding: 12px 25px;
@@ -478,14 +478,23 @@
     }
 
     .category-filters button:hover {
-        background-color: #1a224a; /* Un tono más oscuro al pasar el mouse */
+        background-color: #1a224a;
         transform: translateY(-2px);
     }
 
     .category-filters button.active {
-        background-color: #28a745; /* Color de acento para la categoría activa */
+        background-color: #28a745;
         transform: scale(1.05);
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Contenedor para los botones de categoría secundaria (no 'Todos') */
+    .category-buttons-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px; /* Mismo gap que el .category-filters principal para coherencia */
+        width: 100%; /* Asegura que ocupe el ancho disponible */
     }
 
 
@@ -608,16 +617,30 @@
         font-size: 1em;
       }
 
+      /* INICIO DE CORRECCIÓN PARA BOTONES DE CATEGORÍA EN MÓVILES */
       .category-filters {
-          flex-direction: column; /* Apilar los botones en móviles */
-          gap: 10px;
+          flex-direction: column; /* Apila el botón "Todos" y el grupo de categorías */
+          align-items: center; /* Centra los elementos de la columna */
+          gap: 15px; /* Espacio entre el botón "Todos" y la fila de categorías */
+          margin-bottom: 20px;
+          padding: 0 10px;
       }
+
       .category-filters button {
-          width: 80%; /* Hacer los botones más anchos en móviles */
-          max-width: 250px;
-          padding: 10px 20px;
+          width: 100%; /* El botón 'Todos' ocupará todo el ancho */
+          max-width: none;
+          padding: 12px 15px;
           font-size: 1em;
       }
+
+      .category-buttons-row {
+          display: flex;
+          flex-wrap: wrap; /* Permite que los botones se envuelvan si no caben */
+          justify-content: center; /* Centra los botones de categoría dentro de su fila */
+          gap: 10px; /* Espacio entre los botones de categoría individuales */
+          width: 100%; /* Asegura que esta fila de botones ocupe todo el ancho */
+      }
+      /* FIN DE CORRECCIÓN PARA BOTONES DE CATEGORÍA EN MÓVILES */
     }
   </style>
 </head>
@@ -648,10 +671,12 @@
 
   <div class="category-filters" id="categoryFilters">
       <button class="active" onclick="filterProducts('all', this)">Todos los Productos</button>
-      <button onclick="filterProducts('bolsos', this)">Bolsos</button>
-      <button onclick="filterProducts('mochilas', this)">Mochilas</button>
-      <button onclick="filterProducts('morrales', this)">Morrales</button>
-      </div>
+      <div class="category-buttons-row">
+          <button onclick="filterProducts('bolsos', this)">Bolsos</button>
+          <button onclick="filterProducts('mochilas', this)">Mochilas</button>
+          <button onclick="filterProducts('morrales', this)">Morrales</button>
+          </div>
+  </div>
 
   <main class="container" id="productList"></main>
 </section>
@@ -702,7 +727,7 @@
       id: 1,
       name: "Bolso Deportivo Escence",
       price: 50000,
-      category: "bolsos", // ¡Nueva propiedad de categoría!
+      category: "bolsos",
       images: [
         "https://res.cloudinary.com/dh1qqui2h/image/upload/v1752837295/bolso_1_keowvq.webp",
         "https://res.cloudinary.com/dh1qqui2h/image/upload/v1700000000/bolso_2_ejemplo.webp",
@@ -714,7 +739,7 @@
       id: 2,
       name: "Mochila Maternal Escence",
       price: 35000,
-      category: "mochilas", // ¡Nueva propiedad de categoría!
+      category: "mochilas",
       images: [
         "https://res.cloudinary.com/dh1qqui2h/image/upload/v1752837432/cuna_howlgp.webp",
         "https://res.cloudinary.com/dh1qqui2h/image/upload/v1700000002/mochila_2_ejemplo.webp",
@@ -727,7 +752,7 @@
       id: 3,
       name: "Morral Escence Pro",
       price: 65000,
-      category: "morrales", // ¡Nueva propiedad de categoría!
+      category: "morrales",
       images: [
         "https://res.cloudinary.com/dh1qqui2h/image/upload/v1752837584/morral_sbl8yt.webp",
         "https://res.cloudinary.com/dh1qqui2h/image/upload/v1700000005/morral_2_ejemplo.webp"
@@ -738,7 +763,6 @@
 
   let cart = [];
 
-  // Función modificada para filtrar productos por categoría
   function renderProducts(category = 'all') {
     const container = document.getElementById('productList');
     container.innerHTML = '';
@@ -764,16 +788,13 @@
     });
   }
 
-  // Nueva función para filtrar productos y actualizar la clase activa del botón
   function filterProducts(category, clickedButton) {
-      // Remover la clase 'active' de todos los botones
-      const buttons = document.querySelectorAll('.category-filters button');
-      buttons.forEach(button => button.classList.remove('active'));
+      const allButtons = document.querySelectorAll('.category-filters button');
+      allButtons.forEach(button => button.classList.remove('active'));
 
-      // Añadir la clase 'active' al botón clicado
       clickedButton.classList.add('active');
 
-      renderProducts(category); // Llama a renderProducts con la categoría seleccionada
+      renderProducts(category);
   }
 
 
@@ -870,7 +891,7 @@
     });
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     message += `\nTotal: $${total.toLocaleString('es-AR')}`;
-    const phone = "5493541529201";
+    const phone = "5493541529201"; // Número de WhatsApp para Argentina, Córdoba
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   }
@@ -920,8 +941,7 @@
       document.getElementById('productDetailModal').style.display = 'none';
   }
 
-  // Inicializa la página mostrando todos los productos y el estado del carrito
-  renderProducts('all'); // Llama a renderProducts inicialmente con 'all'
+  renderProducts('all');
   updateCartDisplay();
 </script>
 
