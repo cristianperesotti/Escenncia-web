@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <title>Escencia Tienda</title>
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: sans-serif;
       margin: 0;
@@ -22,8 +26,24 @@
       display: block;
     }
 
-    .container {
+    nav {
+      background: #2d3975;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    section {
       padding: 40px 20px;
+    }
+
+    .container {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
@@ -167,100 +187,119 @@
 <body>
 
 <header>
-  <img src="https://res.cloudinary.com/dh1qqui2h/image/upload/v1752831494/Logo_original_m0nqzp.png" alt="Escencia" style="width: 100%; height: auto; display: block;">
+  <img src="https://res.cloudinary.com/dh1qqui2h/image/upload/v1752831494/Logo_original_m0nqzp.png" alt="Escencia">
 </header>
 
-  <main class="container" id="productList">
-    <!-- Productos van aca -->
-  </main>
+<nav>
+  <a href="#quienes">¿Quiénes somos?</a>
+  <a href="#productos">Productos</a>
+  <a href="#contacto">Contacto</a>
+</nav>
 
-  <div class="cart-float" id="floatingCart">
-    <span>Total: $<span id="cartTotal">0</span></span>
-    <button onclick="toggleCart()">Ver carrito</button>
+<section id="quienes" style="text-align: center;">
+  <h2>¿Quiénes somos?</h2>
+  <p>Somos Escencia: una marca con alma, nacida del esfuerzo de dos hermanas que decidieron transformar su historia en inspiración y estilo.</p>
+</section>
+
+<section id="productos">
+  <h2 style="text-align:center;">Nuestros Productos</h2>
+  <main class="container" id="productList"></main>
+</section>
+
+<section id="contacto" style="text-align: center;">
+  <h2>Contacto</h2>
+  <p>📱 WhatsApp: <a href="https://wa.me/5493541529201" target="_blank">+54 9 3541 529201</a></p>
+  <p>📧 Email: escencia@tienda.com</p>
+  <p>📍 Cosquín, Córdoba, Argentina</p>
+</section>
+
+<div class="cart-float" id="floatingCart">
+  <span>Total: $<span id="cartTotal">0</span></span>
+  <button onclick="toggleCart()">Ver carrito</button>
+</div>
+
+<div class="cart-modal" id="cartModal">
+  <div class="cart-content">
+    <button class="close-cart" onclick="toggleCart()">x</button>
+    <h2>Tu carrito</h2>
+    <div id="cartItems"></div>
+    <p>Total: $<span id="modalTotal">0</span></p>
+    <button class="whatsapp-button" onclick="sendWhatsApp()">Confirmar pedido por WhatsApp</button>
   </div>
+</div>
 
-  <div class="cart-modal" id="cartModal">
-    <div class="cart-content">
-      <button class="close-cart" onclick="toggleCart()">x</button>
-      <h2>Tu carrito</h2>
-      <div id="cartItems"></div>
-      <p>Total: $<span id="modalTotal">0</span></p>
-      <button class="whatsapp-button" onclick="sendWhatsApp()">Confirmar pedido por WhatsApp</button>
-    </div>
-  </div>
+<script>
+  const products = [
+    { id: 1, name: "Bolso Deportivo Escence", price: 50000, image:"https://res.cloudinary.com/dh1qqui2h/image/upload/v1752837295/bolso_1_keowvq.webp" },
+    { id: 2, name: "Mochila Maternal Escence", price: 35000, image: "https://res.cloudinary.com/dh1qqui2h/image/upload/v1752837432/cuna_howlgp.webp" },
+    { id: 3, name: "Morral Escence Pro", price: 65000, image: "https://res.cloudinary.com/dh1qqui2h/image/upload/v1752837584/morral_sbl8yt.webp" }
+  ];
 
-  <script>
-    const products = [
-      { id: 1, name: "Bolso Deportivo Escence", price: 50000, image:"https://res.cloudinary.com/dh1qqui2h/image/upload/v1752837295/bolso_1_keowvq.webp" },
-      { id: 2, name: "Mochila Maternal Escence", price: 35000, image: "https://res.cloudinary.com/dh1qqui2h/image/upload/v1752837432/cuna_howlgp.webp" },
-      { id: 3, name: "Morral Escence Pro", price: 65000, image: "https://res.cloudinary.com/dh1qqui2h/image/upload/v1752837584/morral_sbl8yt.webp" }
-    ];
+  const cart = [];
 
-    const cart = [];
+  function renderProducts() {
+    const container = document.getElementById('productList');
+    container.innerHTML = '';
+    products.forEach(p => {
+      container.innerHTML += `
+        <div class="product">
+          <img src="${p.image}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p>$${p.price}</p>
+          <button onclick="addToCart(${p.id})">Agregar al carrito</button>
+        </div>
+      `;
+    });
+  }
 
-    function renderProducts() {
-      const container = document.getElementById('productList');
-      container.innerHTML = '';
-      products.forEach(p => {
-        container.innerHTML += `
-          <div class="product">
-            <img src="${p.image}" alt="${p.name}">
-            <h3>${p.name}</h3>
-            <p>$${p.price}</p>
-            <button onclick="addToCart(${p.id})">Agregar al carrito</button>
-          </div>
-        `;
-      });
-    }
+  function addToCart(id) {
+    const product = products.find(p => p.id === id);
+    cart.push(product);
+    updateCartDisplay();
+  }
 
-    function addToCart(id) {
-      const product = products.find(p => p.id === id);
-      cart.push(product);
-      updateCartDisplay();
-    }
+  function updateCartDisplay() {
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    document.getElementById('cartTotal').textContent = total;
+    document.getElementById('modalTotal').textContent = total;
 
-    function updateCartDisplay() {
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
-      document.getElementById('cartTotal').textContent = total;
-      document.getElementById('modalTotal').textContent = total;
+    const cartItemsDiv = document.getElementById('cartItems');
+    cartItemsDiv.innerHTML = '';
+    cart.forEach((item, index) => {
+      cartItemsDiv.innerHTML += `
+        <div class="cart-item">
+          <span>${item.name} - $${item.price}</span>
+          <button onclick="removeItem(${index})">Eliminar</button>
+        </div>
+      `;
+    });
+  }
 
-      const cartItemsDiv = document.getElementById('cartItems');
-      cartItemsDiv.innerHTML = '';
-      cart.forEach((item, index) => {
-        cartItemsDiv.innerHTML += `
-          <div class="cart-item">
-            <span>${item.name} - $${item.price}</span>
-            <button onclick="removeItem(${index})">Eliminar</button>
-          </div>
-        `;
-      });
-    }
+  function removeItem(index) {
+    cart.splice(index, 1);
+    updateCartDisplay();
+  }
 
-    function removeItem(index) {
-      cart.splice(index, 1);
-      updateCartDisplay();
-    }
+  function toggleCart() {
+    const modal = document.getElementById('cartModal');
+    modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+  }
 
-    function toggleCart() {
-      const modal = document.getElementById('cartModal');
-      modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
-    }
+  function sendWhatsApp() {
+    if (cart.length === 0) return alert("El carrito está vacío.");
+    let message = "Hola! Quiero confirmar el siguiente pedido:\n\n";
+    cart.forEach(p => {
+      message += `• ${p.name} - $${p.price}\n`;
+    });
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    message += `\nTotal: $${total}`;
+    const phone = "5493541529201";
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  }
 
-    function sendWhatsApp() {
-      if (cart.length === 0) return alert("El carrito esta vacio.");
-      let message = "Hola! Quiero confirmar el siguiente pedido:\n\n";
-      cart.forEach(p => {
-        message += `• ${p.name} - $${p.price}\n`;
-      });
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
-      message += `\nTotal: $${total}`;
-      const phone = "5493541529201";
-      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
-    }
-
-    renderProducts();
-  </script>
+  renderProducts();
+</script>
 
 </body>
 </html>
