@@ -11,32 +11,39 @@
       background-color: #f9f9f9;
     }
 
-header {
+    header {
       padding: 0;
     }
 
     .banner-image {
       width: 100%;
-      height: 40vh;
-      min-height: 200px;
+      height: 50vh; /* Asegura una altura adecuada */
+      min-height: 300px; /* Altura mínima para pantallas pequeñas */
       background-image: url('https://res.cloudinary.com/dh1qqui2h/image/upload/v1752831494/Logo_original_m0nqzp.png');
-      background-size: cover;
+      background-size: contain; /* Asegura que la imagen no se recorte */
       background-position: center;
       background-repeat: no-repeat;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       .banner-image {
-        height: 30vh;
+        height: 40vh; /* Ajusta la altura en dispositivos más pequeños */
+        min-height: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .banner-image {
+        height: 30vh; /* Altura reducida para pantallas muy pequeñas */
       }
     }
 
     .container {
-      padding: 40px 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Hacer los productos responsivos */
+      gap: 20px; /* Espaciado entre los productos */
+      justify-items: center; /* Centra los productos */
     }
 
     .product {
@@ -44,8 +51,9 @@ header {
       border: 1px solid #ddd;
       border-radius: 8px;
       padding: 20px;
-      width: 250px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      width: 100%; /* Ocupa todo el ancho disponible */
+      max-width: 250px; /* Limita el tamaño máximo */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       text-align: center;
     }
 
@@ -57,10 +65,12 @@ header {
 
     .product h3 {
       margin: 10px 0 5px;
+      font-size: 18px;
     }
 
     .product p {
       margin: 5px 0;
+      font-size: 16px;
     }
 
     .product button {
@@ -81,7 +91,7 @@ header {
       background-color: #2d3975;
       padding: 15px 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
       gap: 15px;
@@ -110,7 +120,7 @@ header {
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(0,0,0,0.4);
+      background-color: rgba(0, 0, 0, 0.4);
       display: none;
       justify-content: center;
       align-items: center;
@@ -125,7 +135,7 @@ header {
       max-width: 500px;
       max-height: 80vh;
       overflow-y: auto;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .cart-item {
