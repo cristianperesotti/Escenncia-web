@@ -455,7 +455,7 @@
         color: #1a224a;
     }
 
-    /* Estilos para los botones de filtro de categoría */
+    /* Estilos para los contenedores de filtro */
     .category-filters {
         text-align: center;
         margin-bottom: 30px;
@@ -465,7 +465,8 @@
         gap: 15px;
     }
 
-    .category-filters button {
+    /* Estilos para los botones dentro de desktop-filters */
+    .desktop-filters button {
         background-color: #2d3975;
         color: white;
         border: none;
@@ -477,26 +478,49 @@
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
-    .category-filters button:hover {
+    .desktop-filters button:hover {
         background-color: #1a224a;
         transform: translateY(-2px);
     }
 
-    .category-filters button.active {
+    .desktop-filters button.active {
         background-color: #28a745;
         transform: scale(1.05);
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
-    /* Contenedor para los botones de categoría secundaria (no 'Todos') */
+    /* Contenedor para los botones de categoría secundaria (no 'Todos') en desktop */
     .category-buttons-row {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 15px; /* Mismo gap que el .category-filters principal para coherencia */
+        gap: 15px;
         width: 100%; /* Asegura que ocupe el ancho disponible */
     }
 
+    /* Estilos para el select en móvil (por defecto oculto en desktop) */
+    .mobile-filters {
+        display: none; /* Oculto por defecto en desktop */
+        width: 100%;
+        text-align: center;
+    }
+
+    .mobile-filters select {
+        width: 80%; /* Ancho para el select en móvil */
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+        appearance: none; /* Quita el estilo nativo del select en algunos navegadores */
+        background-color: white;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        /* Flecha personalizada para el select (opcional) */
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232d3975%22%20d%3D%22M287%2C197.8L150.4%2C61.2c-1.3-1.3-3.2-1.3-4.5%2C0l-136%2C136.6c-1.3%2C1.3-1.3%2C3.2%2C0%2C4.5c0.6%2C0.6%2C1.5%2C1%2C2.3%2C1h272.5c0.8%2C0%2C1.7-0.4%2C2.3-1C288.3%2C201%2C288.3%2C199.1%2C287%2C197.8z%22%2F%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 12px;
+    }
 
     /* RESPONSIVE para celulares y tablets */
     @media (max-width: 768px) {
@@ -617,30 +641,25 @@
         font-size: 1em;
       }
 
-      /* INICIO DE CORRECCIÓN PARA BOTONES DE CATEGORÍA EN MÓVILES */
+      /* Filtros de categoría en móvil (usando dropdown) */
       .category-filters {
-          flex-direction: column; /* Apila el botón "Todos" y el grupo de categorías */
-          align-items: center; /* Centra los elementos de la columna */
-          gap: 15px; /* Espacio entre el botón "Todos" y la fila de categorías */
+          flex-direction: column; /* Apila los elementos (el dropdown) */
+          align-items: center; /* Centra el dropdown */
+          gap: 15px;
           margin-bottom: 20px;
           padding: 0 10px;
       }
 
-      .category-filters button {
-          width: 100%; /* El botón 'Todos' ocupará todo el ancho */
-          max-width: none;
-          padding: 12px 15px;
-          font-size: 1em;
+      /* Oculta los botones de filtro de desktop en móvil */
+      .desktop-filters {
+          display: none;
       }
 
-      .category-buttons-row {
-          display: flex;
-          flex-wrap: wrap; /* Permite que los botones se envuelvan si no caben */
-          justify-content: center; /* Centra los botones de categoría dentro de su fila */
-          gap: 10px; /* Espacio entre los botones de categoría individuales */
-          width: 100%; /* Asegura que esta fila de botones ocupe todo el ancho */
+      /* Muestra el dropdown de filtro en móvil */
+      .mobile-filters {
+          display: block;
       }
-      /* FIN DE CORRECCIÓN PARA BOTONES DE CATEGORÍA EN MÓVILES */
+
     }
   </style>
 </head>
@@ -670,12 +689,24 @@
   <h2 style="text-align:center; font-size:2.2em; margin-bottom:40px; color:#333;">Catálogo de Bolsos, Mochilas y Morrales de Escencia</h2>
 
   <div class="category-filters" id="categoryFilters">
-      <button class="active" onclick="filterProducts('all', this)">Todos los Productos</button>
-      <div class="category-buttons-row">
-          <button onclick="filterProducts('bolsos', this)">Bolsos</button>
-          <button onclick="filterProducts('mochilas', this)">Mochilas</button>
-          <button onclick="filterProducts('morrales', this)">Morrales</button>
-          </div>
+      <div class="desktop-filters">
+          <button class="active" onclick="filterProducts('all', this)">Todos los Productos</button>
+          <div class="category-buttons-row">
+              <button onclick="filterProducts('bolsos', this)">Bolsos</button>
+              <button onclick="filterProducts('mochilas', this)">Mochilas</button>
+              <button onclick="filterProducts('morrales', this)">Morrales</button>
+              </div>
+      </div>
+
+      <div class="mobile-filters">
+          <label for="mobileCategorySelect" style="display: none;">Selecciona una categoría:</label>
+          <select id="mobileCategorySelect" onchange="filterProducts(this.value, this)">
+              <option value="all">Todos los Productos</option>
+              <option value="bolsos">Bolsos</option>
+              <option value="mochilas">Mochilas</option>
+              <option value="morrales">Morrales</option>
+              </select>
+      </div>
   </div>
 
   <main class="container" id="productList"></main>
@@ -788,11 +819,19 @@
     });
   }
 
-  function filterProducts(category, clickedButton) {
-      const allButtons = document.querySelectorAll('.category-filters button');
-      allButtons.forEach(button => button.classList.remove('active'));
-
-      clickedButton.classList.add('active');
+  function filterProducts(category, clickedElement) {
+      // Si el elemento clicado es un botón (desktop)
+      if (clickedElement.tagName === 'BUTTON') {
+          const allButtons = document.querySelectorAll('.desktop-filters button');
+          allButtons.forEach(button => button.classList.remove('active'));
+          clickedElement.classList.add('active');
+      }
+      // Si el elemento clicado es un select (móvil)
+      else if (clickedElement.tagName === 'SELECT') {
+          // No necesitamos manejar la clase 'active' para un select
+          // Pero podemos asegurar que la opción seleccionada tenga el valor correcto
+          clickedElement.value = category; // Asegura que el select muestre la categoría correcta
+      }
 
       renderProducts(category);
   }
